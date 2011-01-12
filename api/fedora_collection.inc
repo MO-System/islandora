@@ -76,9 +76,9 @@ function get_related_items_as_xml($collection_pid, $relationship = array('isMemb
   }
   
   $query_string = 'select $object $title $content from <#ri>
-                             where ($object <dc:title> $title
-                             and $object <fedora-model:hasModel> $content
-                             and (';
+                             where ($object <dc:title> $title'
+                             .(!empty($content) ? ' and $object <fedora-model:hasModel> $content':'').
+                             ' and (';
 
   if (is_array($relationship)) {
     foreach ($relationship as $rel) {
