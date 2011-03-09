@@ -23,11 +23,22 @@ class Newspaper {
     $tabset['my_tabset'] = array(
       '#type' => 'tabset',
     );
+    
+    //pass drupal domain name to iiv for ajax calls
+    
 
     global $user;
-    $qs = '';
+    $qs='?';
+    
     if ($user->uid != 0) {
-      $qs = '?uid='. base64_encode($user->name . ':'. $user->pass);
+      $qs .= 'uid=' . base64_encode($user->name . ':'. $user->pass) . '&drupal_uid=' . $user->uid ;
+      //$qs = 'uid=' . base64_encode($user->name . ':'. $user->pass);
+    }
+    if($_SERVER['HTTPS']){
+        $qs .= '&drupal_domain=https://' . $_SERVER['HTTP_HOST'];
+    }
+    else{
+        $qs .= '&drupal_domain=http://' . $_SERVER['HTTP_HOST'];
     }
 
     $viewer_url = variable_get('fedora_base_url', '') . '/get/'. $this->pid . '/ilives:viewerSdef/getViewer'. $qs;

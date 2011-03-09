@@ -106,6 +106,8 @@
               passBy="VALUE" required="true"/>
             <fmm:DefaultInputParm defaultValue="JP2" label="content model" parmName="DSID" passBy="VALUE" required="true"/>
             <fmm:UserInputParm defaultValue="" parmName="uid" passBy="VALUE" required="false"/>
+            <fmm:UserInputParm defaultValue="" parmName="drupal_uid" passBy="VALUE" required="false"/>
+            <fmm:UserInputParm defaultValue="" parmName="drupal_domain" passBy="VALUE" required="false"/>            
             <fmm:MethodReturnType wsdlMsgName="getViewerResponseMsg" wsdlMsgTOMIME="text/html"/>
           </fmm:Method>
         </fmm:MethodMap>
@@ -170,6 +172,8 @@
             <wsdl:part name="CMODEL" type="xsd:string"/>
             <wsdl:part name="DSID" type="xsd:string"/>
             <wsdl:part name="uid" type="xsd:string"/>
+            <wsdl:part name="drupal_uid" type="xsd:string"/>
+            <wsdl:part name="drupal_domain" type="xsd:string"/>
           </wsdl:message>
           <wsdl:message name="getViewerResponseMsg">
             <wsdl:part name="RESPONSE" type="xsd:string"/>
@@ -188,7 +192,7 @@
           <wsdl:binding name="viewer_binding" type="this:viewer_portType">
             <http:binding verb="GET"/>
             <wsdl:operation name="getViewer">
-              <http:operation location="?pid=(PID)&amp;cmodel=(CMODEL)&amp;dsid=(DSID)&amp;uid=(uid)"/>
+              <http:operation location="?pid=(PID)&amp;cmodel=(CMODEL)&amp;dsid=(DSID)&amp;uid=(uid)&amp;drupal_uid=(drupal_uid)&amp;drupal_domain=(drupal_domain)"/>
               <wsdl:input>
                 <http:urlReplacement/>
               </wsdl:input>
