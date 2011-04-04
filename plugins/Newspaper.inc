@@ -24,9 +24,7 @@ class Newspaper {
       '#type' => 'tabset',
     );
     
-    //pass drupal domain name to iiv for ajax calls
-    
-
+    //pass drupal domain name to iiv for ajax call
     global $user;
     $qs='?';
     
@@ -35,10 +33,16 @@ class Newspaper {
       //$qs = 'uid=' . base64_encode($user->name . ':'. $user->pass);
     }
     if($_SERVER['HTTPS']){
-        $qs .= '&drupal_domain=https://' . $_SERVER['HTTP_HOST'];
+        $domain=urlencode('https://' . $_SERVER['HTTP_HOST']);
+        $qs .= '&drupal_domain=' . $domain;
     }
     else{
-        $qs .= '&drupal_domain=http://' . $_SERVER['HTTP_HOST'];
+        $domain=urlencode('http://' . $_SERVER['HTTP_HOST']);
+        $qs .= '&drupal_domain=' . $domain;
+    }
+    
+    if(array_key_exists('query',$_GET)){
+        $qs.='&search=' . $_GET['query'];
     }
 
     $viewer_url = variable_get('fedora_base_url', '') . '/get/'. $this->pid . '/ilives:viewerSdef/getViewer'. $qs;
@@ -71,10 +75,25 @@ class Newspaper {
       '#type' => 'tabset',
     );
 
+    //pass drupal domain name to iiv for ajax call
     global $user;
-    $qs = '';
+    $qs='?';
+    
     if ($user->uid != 0) {
-      $qs = '?uid='. base64_encode($user->name . ':'. $user->pass);
+      $qs .= 'uid=' . base64_encode($user->name . ':'. $user->pass) . '&drupal_uid=' . $user->uid ;
+      //$qs = 'uid=' . base64_encode($user->name . ':'. $user->pass);
+    }
+    if($_SERVER['HTTPS']){
+        $domain=urlencode('https://' . $_SERVER['HTTP_HOST']);
+        $qs .= '&drupal_domain=' . $domain;
+    }
+    else{
+        $domain=urlencode('http://' . $_SERVER['HTTP_HOST']);
+        $qs .= '&drupal_domain=' . $domain;
+    }
+    
+    if(array_key_exists('query',$_GET)){
+        $qs.='&search=' . $_GET['query'];
     }
 
     $viewer_url = variable_get('fedora_base_url', '') . '/get/'. $this->pid . '/ilives:viewerSdef/getViewer'. $qs;
